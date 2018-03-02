@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 public class SafeKey_Main_Page extends AppCompatActivity {
 
-    private Button doorButton;w
+    private Button doorButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +24,10 @@ public class SafeKey_Main_Page extends AppCompatActivity {
 
         String btnText = doorButton.getText().toString();
 
-        if (btnText.equals("Unlock")) {
+        if (btnText.equals(getString(R.string.unlock))) {
             doorButton.setText(R.string.lock);
         }
-        else if (btnText.equals("Lock")){
+        else if (btnText.equals(getString(R.string.lock))){
             doorButton.setText(R.string.unlock);
         }
         else {
