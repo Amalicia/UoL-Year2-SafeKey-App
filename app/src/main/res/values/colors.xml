@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#607D8B</color>
+    <color name="colorPrimaryDark">#455A64</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- SafeKey Colours -->
+    <color name="safeKey_darkPrimary">#455A64</color>
+    <color name="safeKey_lightPrimary">#CFD8DC</color>
+    <color name="safeKey_primaryColour">#607D8B</color>
+    <color name="safeKey_text">#FFFFFF</color>
+    <color name="safeKey_accent">#FF4081</color>
+    <color name="safeKey_primaryText">#212121</color>
+    <color name="safeKey_secondaryText">#757575</color>
+    <color name="safeKey_dividerColour">#BDBDBD</color>
+
+</resources>
