@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.android.safekey.SafeKey_Main_Page">
+    android:layout_height="match_parent">
 
-    <Button
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/doorButton"
-        android:onClick="onClickBtn"/>
+        android:id="@+id/rv_locks">
+
+    </android.support.v7.widget.RecyclerView>
 </FrameLayout>
