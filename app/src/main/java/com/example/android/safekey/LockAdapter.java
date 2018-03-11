@@ -11,9 +11,13 @@ import android.widget.TextView;
  * Created by Lottie on 08/03/2018.
  */
 
-public class LockAdapter extends RecyclerView.Adapter<LockAdapter.LockViewHolder> {
+public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int mNumberItems;
+
+    //Views
+    private static final int LOCK = 0;
+    private static final int PLUS = 1;
 
     public LockAdapter(int numberOfItems)
     {
@@ -21,21 +25,43 @@ public class LockAdapter extends RecyclerView.Adapter<LockAdapter.LockViewHolder
     }
 
     @Override
-    public LockViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemViewType(int position) {
+        if (position < mNumberItems - 1) return LOCK;
+        else return PLUS;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context ctx = parent.getContext();
-        int layoutIdForListItem = R.layout.locks_list_item;
         LayoutInflater inflater = LayoutInflater.from(ctx);
         boolean shouldAttachToParent = false;
 
-        View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParent);
-        LockViewHolder viewHolder = new LockViewHolder(view);
+        RecyclerView.ViewHolder viewHolder = null;
+        switch (viewType) {
+            case LOCK:
+                View lockView = inflater.inflate(R.layout.locks_list_item, parent, shouldAttachToParent);
+                viewHolder = new LockViewHolder(lockView);
+                break;
+            case PLUS:
+                View plusView = inflater.inflate(R.layout.end_of_view, parent, shouldAttachToParent);
+                viewHolder = new PlusViewHolder(plusView);
+                break;
+        }
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(LockViewHolder holder, int position) {
-        holder.bind(position);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        switch (getItemViewType(position)) {
+            case LOCK:
+                final LockViewHolder lockViewHolder = (LockViewHolder) holder;
+                lockViewHolder.bind(position);
+                break;
+            case PLUS:
+                final PlusViewHolder plusViewHolder = (PlusViewHolder) holder;
+                break;
+        }
     }
 
     @Override
@@ -55,6 +81,13 @@ public class LockAdapter extends RecyclerView.Adapter<LockAdapter.LockViewHolder
         public void bind(int listIndex)
         {
             ListItemLockView.setText("Lock " + String.valueOf(listIndex));
+        }
+    }
+
+    class PlusViewHolder extends RecyclerView.ViewHolder {
+
+        public PlusViewHolder(View itemView) {
+            super(itemView);
         }
     }
 }
