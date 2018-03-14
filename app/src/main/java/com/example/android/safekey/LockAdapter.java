@@ -19,9 +19,17 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int LOCK = 0;
     private static final int PLUS = 1;
 
-    public LockAdapter(int numberOfItems)
+    //Click Listener
+    final private PlusClickListener mOnClickListener;
+
+    public LockAdapter(int numberOfItems, PlusClickListener listener)
     {
         mNumberItems = numberOfItems;
+        mOnClickListener = listener;
+    }
+
+    public interface PlusClickListener {
+        void onPlusClicked(int clickedItemIndex);
     }
 
     @Override
@@ -84,10 +92,17 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    class PlusViewHolder extends RecyclerView.ViewHolder {
+    class PlusViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public PlusViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int clickedPosition = getAdapterPosition();
+            mOnClickListener.onPlusClicked(clickedPosition);
         }
     }
 }
