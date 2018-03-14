@@ -1,16 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.safekey.Add_New_Lock_Activity">
+    tools:context="com.example.android.safekey.Add_New_Lock_Activity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_lock_name"
+        android:text="Lock Name:"
+        android:fontFamily="casual"
+        android:textSize="25sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="5dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_lock_name"
+        android:text="Enter Lock Name Here"
+        android:fontFamily="casual"
+        android:textSize="15sp"
+        android:layout_marginHorizontal="5dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_password"
+        android:text="Password:"
+        android:fontFamily="casual"
+        android:textSize="25sp"
+        android:layout_marginHorizontal="5dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_password"
+        android:text="Enter Password Here"
+        android:fontFamily="casual"
+        android:textSize="15sp"
+        android:layout_marginHorizontal="5dp"/>
+    </LinearLayout>
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is a work in progress."
-        android:textSize="30sp"
-        android:textAlignment="center"/>
+        android:id="@+id/btn_connect"
+        android:text="Connect"
+        android:fontFamily="casual"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
