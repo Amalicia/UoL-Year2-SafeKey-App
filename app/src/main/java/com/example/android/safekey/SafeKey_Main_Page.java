@@ -2,6 +2,8 @@ package com.example.android.safekey;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,13 +15,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.android.safekey.SQLiteDB.LockListContract;
+import com.example.android.safekey.SQLiteDB.LockListDBHelper;
+import com.example.android.safekey.SQLiteDB.TestData;
+
 public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.PlusClickListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private static final int LOCK_LIST_ITEMS= 15;
     private LockAdapter mAdapter;
     private RecyclerView mLockList;
+
+    //SQLite Database
+    private SQLiteDatabase mDB;
 
     private Toast mToast;
 
@@ -43,8 +51,17 @@ public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mLockList.setLayoutManager(layoutManager);
 
-        mLockList.setHasFixedSize(true);
-        mAdapter = new LockAdapter(LOCK_LIST_ITEMS, this);
+        //Create DB helper
+        LockListDBHelper dbHelper = new LockListDBHelper(this);
+        mDB = dbHelper.getWritableDatabase();
+
+        //Insert fake data from TestData
+        TestData.insertFakeData(mDB);
+        //Get the data
+        Cursor cursor = getLockData();
+
+        //Create adapter based on locks in database
+        mAdapter = new LockAdapter(cursor, this);
         mLockList.setAdapter(mAdapter);
     }
   
@@ -75,5 +92,19 @@ public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.
         //Create intent
         Intent intent = new Intent(ctx, destinationActivity);
         startActivity(intent);
+    }
+
+    private Cursor getLockData() {
+        String[] columns = new String[1];
+        columns[0] = LockListContract.LockListEntry.COLUMN_LOCK_NAME;
+        return mDB.query(
+                LockListContract.LockListEntry.TABLE_NAME,
+                columns,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
     }
 }
