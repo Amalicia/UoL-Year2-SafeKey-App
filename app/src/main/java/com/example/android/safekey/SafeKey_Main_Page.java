@@ -29,7 +29,6 @@ public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.
     //SQLite Database
     private SQLiteDatabase mDB;
 
-    private Toast mToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
