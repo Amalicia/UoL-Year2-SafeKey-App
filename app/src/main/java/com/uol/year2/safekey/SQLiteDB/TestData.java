@@ -1,4 +1,4 @@
-package com.example.android.safekey.SQLiteDB;
+package com.uol.year2.safekey.SQLiteDB;
 
 import android.content.ContentValues;
 import android.database.SQLException;

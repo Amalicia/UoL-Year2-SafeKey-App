@@ -1,4 +1,4 @@
-package com.example.android.safekey;
+package com.uol.year2.safekey;
 
 import org.junit.Test;
 

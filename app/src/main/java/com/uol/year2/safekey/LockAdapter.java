@@ -1,4 +1,4 @@
-package com.example.android.safekey;
+package com.uol.year2.safekey;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.safekey.SQLiteDB.LockListContract;
+import com.uol.year2.safekey.SQLiteDB.LockListContract;
 
 /**
  * Created by Lottie on 08/03/2018.

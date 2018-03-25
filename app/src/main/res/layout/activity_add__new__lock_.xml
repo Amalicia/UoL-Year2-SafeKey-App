@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.safekey.Add_New_Lock_Activity"
+    tools:context="com.uol.year2.safekey.Add_New_Lock_Activity"
     android:orientation="vertical">
 
     <LinearLayout

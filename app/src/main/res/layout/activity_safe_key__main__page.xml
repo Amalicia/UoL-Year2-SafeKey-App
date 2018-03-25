@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.safekey.SafeKey_Main_Page"
+    tools:context="com.uol.year2.safekey.SafeKey_Main_Page"
     android:id="@+id/DrawerLayout">
 
     <LinearLayout

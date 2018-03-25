@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.safekey">
+    package="com.uol.year2.safekey">
 
     <application
         android:allowBackup="true"
@@ -17,6 +17,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".Add_New_Lock_Activity"></activity>
+        
+        <provider
+            android:authorities="com.uol.year2.safekey.SQLiteDB.LockListContentProvider"
+            android:name="com.uol.year2.safekey.SQLiteDB.LockListContentProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>

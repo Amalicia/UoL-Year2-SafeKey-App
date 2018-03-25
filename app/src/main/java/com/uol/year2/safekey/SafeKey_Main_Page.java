@@ -1,4 +1,4 @@
-package com.example.android.safekey;
+package com.uol.year2.safekey;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,13 +11,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.android.safekey.SQLiteDB.LockListContract;
-import com.example.android.safekey.SQLiteDB.LockListDBHelper;
-import com.example.android.safekey.SQLiteDB.TestData;
+import com.uol.year2.safekey.SQLiteDB.LockListContract;
+import com.uol.year2.safekey.SQLiteDB.LockListDBHelper;
+import com.uol.year2.safekey.SQLiteDB.TestData;
 
 public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.PlusClickListener {
 
@@ -28,7 +25,6 @@ public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.
 
     //SQLite Database
     private SQLiteDatabase mDB;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
