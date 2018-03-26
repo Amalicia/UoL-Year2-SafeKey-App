@@ -73,6 +73,24 @@
          android:id="@+id/btn_test_connect"
          android:text="Test" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_test_function"
+        android:text="Test function"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_static_test"
+        android:text="Static test"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_static_function"
+        android:text="Static function"/>
+
     </LinearLayout>
 
     <Button

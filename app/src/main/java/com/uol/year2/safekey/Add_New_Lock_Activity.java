@@ -23,6 +23,9 @@ public class Add_New_Lock_Activity extends AppCompatActivity {
 
     private EditText mIpText;
     private Button mTestConnect;
+    private Button mTestFunction;
+    private Button mStaticConnect;
+    private Button mStaticFunction;
     private Toast mToast;
     private Context ctx;
 
@@ -32,6 +35,10 @@ public class Add_New_Lock_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_add__new__lock_);
 
         mTestConnect = (Button) findViewById(R.id.btn_test_connect);
+        mTestFunction = (Button) findViewById(R.id.btn_test_function);
+        mStaticConnect = (Button) findViewById(R.id.btn_static_test);
+        mStaticConnect = (Button) findViewById(R.id.btn_static_function);
+
         mIpText = (EditText) findViewById(R.id.et_ip);
 
         ctx = this;
@@ -41,6 +48,27 @@ public class Add_New_Lock_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new BackgroundConnect().doInBackground("");
+            }
+        });
+
+        mTestFunction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new BackgroundConnect().doInBackground("lock");
+            }
+        });
+
+        mStaticConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new StaticConnect().doInBackground("");
+            }
+        });
+
+        mStaticConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new StaticConnect().doInBackground("lock");
             }
         });
     }
@@ -71,9 +99,45 @@ public class Add_New_Lock_Activity extends AppCompatActivity {
 
     private class BackgroundConnect extends AsyncTask<String, Void, String> {
         @Override
-        protected String doInBackground(String... strings) {
+        protected String doInBackground(String... params) {
             try {
-                URL url = new URL("https://" + mIpText.getText().toString());
+                URL url = new URL("https://" + mIpText.getText().toString() + "/?" + params[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                StringBuilder result = new StringBuilder();
+                String inputLine;
+
+                while ((inputLine = in.readLine()) != null){
+                    result.append("\n");
+                }
+
+                in.close();
+                connection.disconnect();
+
+                //Messages to say if connected or not
+                String connectMessage = "We are connected!";
+                mToast = Toast.makeText(ctx, connectMessage, Toast.LENGTH_LONG);
+                mToast.show();
+
+                return result.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            String connectFailedMessage = "Nope, no connection :(";
+            mToast = Toast.makeText(ctx, connectFailedMessage, Toast.LENGTH_LONG);
+            mToast.show();
+            return null;
+        }
+    }
+
+    private class StaticConnect extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                URL url = new URL("https://192.168.0.29/?" + params[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
