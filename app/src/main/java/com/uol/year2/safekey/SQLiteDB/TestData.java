@@ -22,16 +22,19 @@ public class TestData {
         ContentValues cv = new ContentValues();
         cv.put(LockListContract.LockListEntry.COLUMN_LOCK_NAME, "Front Door");
         cv.put(LockListContract.LockListEntry.COLUMN_LOCK_PW, "password");
+        cv.put(LockListContract.LockListEntry.COLUMN_IP_ADDRESS, "1");
         list.add(cv);
 
         cv = new ContentValues();
         cv.put(LockListContract.LockListEntry.COLUMN_LOCK_NAME, "Back door");
         cv.put(LockListContract.LockListEntry.COLUMN_LOCK_PW, "password");
+        cv.put(LockListContract.LockListEntry.COLUMN_IP_ADDRESS, "2");
         list.add(cv);
 
         cv = new ContentValues();
         cv.put(LockListContract.LockListEntry.COLUMN_LOCK_NAME, "Steve");
         cv.put(LockListContract.LockListEntry.COLUMN_LOCK_PW, "password");
+        cv.put(LockListContract.LockListEntry.COLUMN_IP_ADDRESS, "3");
         list.add(cv);
 
         try

@@ -3,6 +3,7 @@ package com.uol.year2.safekey;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +26,8 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //Click Listener
     final private PlusClickListener mOnClickListener;
 
-    public LockAdapter(Cursor cursor, PlusClickListener listener)
+    public LockAdapter(PlusClickListener listener)
     {
-        mCursor = cursor;
         mOnClickListener = listener;
     }
 
@@ -37,6 +37,9 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
+        //If cursor is null then set only a plus
+        if (mCursor == null) return PLUS;
+
         //Sets the view type. Only last item in list can be a plus
         if (position < mCursor.getCount()) return LOCK;
         else return PLUS;
@@ -70,10 +73,17 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         //Binding of the views into their positions
         switch (getItemViewType(position)) {
             case LOCK:              //Lock binding
-                if (!mCursor.moveToPosition(position)) return;
+                int idIndex = mCursor.getColumnIndex(LockListContract.LockListEntry._ID);
+
+                Log.d("Lock Adapter", "idIndex = " + idIndex);
+                mCursor.moveToPosition(position);
+
                 final LockViewHolder lockViewHolder = (LockViewHolder) holder;
                 String name = mCursor.getString(mCursor.getColumnIndex(LockListContract.LockListEntry.COLUMN_LOCK_NAME));
                 lockViewHolder.setName(name);
+
+                final int id = mCursor.getInt(idIndex);
+                lockViewHolder.itemView.setTag(id);
                 break;
             case PLUS:              //Plus binding
                 final PlusViewHolder plusViewHolder = (PlusViewHolder) holder;
@@ -83,7 +93,19 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mCursor.getCount() + 1;
+        if (mCursor == null) return 1;
+        else return mCursor.getCount() + 1;
+    }
+
+    //Swap cursor function
+    public Cursor swapCursor(Cursor c) {
+       if (mCursor == c) return null;
+
+       Cursor temp = mCursor;
+       this.mCursor = c;
+
+       if (c != null) this.notifyDataSetChanged();
+       return temp;
     }
 
     // Creation of two views with different purposes

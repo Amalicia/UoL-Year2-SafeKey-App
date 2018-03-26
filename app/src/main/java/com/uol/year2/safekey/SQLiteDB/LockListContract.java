@@ -24,5 +24,6 @@ public class LockListContract {
         public static final String TABLE_NAME = "lock_list";
         public static final String COLUMN_LOCK_NAME = "lock_name";
         public static final String COLUMN_LOCK_PW = "lock_password";
+        public static final String COLUMN_IP_ADDRESS = "ip_address";
     }
 }

@@ -19,7 +19,7 @@
         <activity android:name=".Add_New_Lock_Activity"></activity>
         
         <provider
-            android:authorities="com.uol.year2.safekey.SQLiteDB.LockListContentProvider"
+            android:authorities="com.uol.year2.safekey"
             android:name="com.uol.year2.safekey.SQLiteDB.LockListContentProvider"
             android:exported="false"/>
     </application>

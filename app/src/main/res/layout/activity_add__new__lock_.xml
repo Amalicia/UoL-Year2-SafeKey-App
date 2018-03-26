@@ -84,7 +84,8 @@
         android:textSize="20sp"
         android:textAllCaps="false"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickAddLock"/>
 
 
 
