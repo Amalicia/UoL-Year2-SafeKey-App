@@ -62,7 +62,13 @@ public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                if (viewHolder.itemView.getTag() == null) return;
+                Log.d(TAG, "Plus tag is: " + viewHolder.itemView.getTag());
+                if (viewHolder.itemView.getTag() == null) {
+                    getSupportLoaderManager().restartLoader(LOCK_LOADER_ID, null, SafeKey_Main_Page.this);
+                    return;
+                }
+
+                Log.d(TAG, "This should not be seen when plus is swiped");
                 int id = (int) viewHolder.itemView.getTag();
                 String stringId = Integer.toString(id);
 

@@ -47,28 +47,28 @@ public class Add_New_Lock_Activity extends AppCompatActivity {
         mTestConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new BackgroundConnect().doInBackground("");
+                new Background_get().execute("");
             }
         });
 
         mTestFunction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new BackgroundConnect().doInBackground("lock");
+                new Background_get().execute("lock");
             }
         });
 
         mStaticConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new StaticConnect().doInBackground("");
+                new StaticConnect().execute("");
             }
         });
 
         mStaticConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new StaticConnect().doInBackground("lock");
+                new StaticConnect().execute("lock");
             }
         });
     }
@@ -97,39 +97,43 @@ public class Add_New_Lock_Activity extends AppCompatActivity {
         finish();
     }
 
-    private class BackgroundConnect extends AsyncTask<String, Void, String> {
+    private class Background_get extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
             try {
-                URL url = new URL("https://" + mIpText.getText().toString() + "/?" + params[0]);
+                URL url = new URL("http://" + mIpText.getText().toString() + "/?" + params[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
                 StringBuilder result = new StringBuilder();
                 String inputLine;
-
-                while ((inputLine = in.readLine()) != null){
-                    result.append("\n");
-                }
+                while ((inputLine = in.readLine()) != null)
+                    result.append(inputLine).append("\n");
 
                 in.close();
                 connection.disconnect();
 
-                //Messages to say if connected or not
+                //Connected toast
                 String connectMessage = "We are connected!";
                 mToast = Toast.makeText(ctx, connectMessage, Toast.LENGTH_LONG);
                 mToast.show();
 
                 return result.toString();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
+            //Connection failed toast
             String connectFailedMessage = "Nope, no connection :(";
             mToast = Toast.makeText(ctx, connectFailedMessage, Toast.LENGTH_LONG);
             mToast.show();
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
         }
     }
 
