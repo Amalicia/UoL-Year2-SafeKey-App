@@ -2,12 +2,17 @@ package com.uol.year2.safekey;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.uol.year2.safekey.SQLiteDB.LockListContract;
 
@@ -26,13 +31,21 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //Click Listener
     final private PlusClickListener mOnClickListener;
 
-    public LockAdapter(PlusClickListener listener)
+    //Switch listener
+    final private SwitchCheckListener mOnCheckListener;
+
+    public LockAdapter(PlusClickListener listener, SwitchCheckListener listener2)
     {
         mOnClickListener = listener;
+        mOnCheckListener = listener2;
     }
 
     public interface PlusClickListener {
         void onPlusClicked(int clickedItemIndex);
+    }
+
+    public interface SwitchCheckListener {
+        void onSwitchChanged(int clickedItemIndex);
     }
 
     @Override
@@ -69,7 +82,7 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         //Binding of the views into their positions
         switch (getItemViewType(position)) {
             case LOCK:              //Lock binding
@@ -84,6 +97,18 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 final int id = mCursor.getInt(idIndex);
                 lockViewHolder.itemView.setTag(id);
+
+                lockViewHolder.mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            mOnCheckListener.onSwitchChanged(position);
+                        } else {
+
+                        }
+                    }
+                });
+
                 break;
             case PLUS:              //Plus binding
                 final PlusViewHolder plusViewHolder = (PlusViewHolder) holder;
@@ -112,11 +137,13 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     class LockViewHolder extends RecyclerView.ViewHolder {
         TextView ListItemLockView;
+        public Switch mSwitch;
 
         public LockViewHolder (View itemView)
         {
            super(itemView);
            ListItemLockView = (TextView) itemView.findViewById(R.id.tv_item_lock);
+           mSwitch = (Switch) itemView.findViewById(R.id.sh_toggle);
         }
 
         public void setName(String name)

@@ -23,6 +23,7 @@ public class LockListContentProvider extends ContentProvider {
     public static final int LOCKS = 100;
     public static final int LOCKS_WITH_ID = 101;
     public static final int NAMES = 110;
+    public static final int LOCKS_WITH_IP = 120;
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
@@ -33,6 +34,7 @@ public class LockListContentProvider extends ContentProvider {
         uriMatcher.addURI(LockListContract.AUTHORITY, LockListContract.PATH_LOCKS, LOCKS);
         uriMatcher.addURI(LockListContract.AUTHORITY, LockListContract.PATH_LOCKS + "/#", LOCKS_WITH_ID);
         uriMatcher.addURI(LockListContract.AUTHORITY, LockListContract.PATH_LOCKS + "/names", NAMES);
+        uriMatcher.addURI(LockListContract.AUTHORITY, LockListContract.PATH_LOCKS + "/ip/#", LOCKS_WITH_IP);
 
         return uriMatcher;
     }
@@ -69,6 +71,21 @@ public class LockListContentProvider extends ContentProvider {
                         projection,
                         selection,
                         selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                break;
+            case LOCKS_WITH_IP:
+                String id = uri.getPathSegments().get(1);
+                String[] mProjection = new String[] {"ip_address"};
+                String mSelection = "_id=?";
+                String[] mSelectionArgs = new String[] {id};
+
+                returnCursor = db.query(
+                        LockListContract.LockListEntry.TABLE_NAME,
+                        mProjection,
+                        mSelection,
+                        mSelectionArgs,
                         null,
                         null,
                         sortOrder);

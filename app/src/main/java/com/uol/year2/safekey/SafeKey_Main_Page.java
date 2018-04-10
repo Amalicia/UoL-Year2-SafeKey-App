@@ -19,7 +19,7 @@ import android.view.MenuItem;
 
 import com.uol.year2.safekey.SQLiteDB.LockListContract;
 
-public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.PlusClickListener, LoaderManager.LoaderCallbacks<Cursor> {
+public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.PlusClickListener, LockAdapter.SwitchCheckListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -51,7 +51,7 @@ public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.
         mLockList.setLayoutManager(layoutManager);
 
         //Create adapter based on locks in database
-        mAdapter = new LockAdapter(this);
+        mAdapter = new LockAdapter(this, this);
         mLockList.setAdapter(mAdapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -113,6 +113,23 @@ public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.
         //Create intent
         Intent intent = new Intent(ctx, destinationActivity);
         startActivity(intent);
+    }
+
+    @Override
+    public void onSwitchChanged(int clickedItemIndex) {
+        Log.d("Switch", "Not broken " + clickedItemIndex);
+        String pos = Integer.toString(clickedItemIndex);
+
+        Uri uri = LockListContract.LockListEntry.CONTENT_URI;
+        uri = uri.buildUpon().appendPath("ip").appendPath(pos).build();
+
+        Log.d(TAG, "Uri is: " + uri.toString());
+
+        Cursor mCusror = getContentResolver().query(uri, null, null, null,null);
+        if (mCusror.moveToFirst()) {
+            String data = mCusror.getString(mCusror.getColumnIndex(LockListContract.LockListEntry.COLUMN_IP_ADDRESS));
+            Log.d(TAG, data);
+        }
     }
 
     @Override
