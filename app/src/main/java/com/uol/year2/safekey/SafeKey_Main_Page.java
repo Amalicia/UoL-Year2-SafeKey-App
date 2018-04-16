@@ -116,19 +116,25 @@ public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.
     }
 
     @Override
-    public void onSwitchChanged(int clickedItemIndex) {
+    public void onSwitchChanged(int clickedItemIndex, boolean b, Object tag) {
         Log.d("Switch", "Not broken " + clickedItemIndex);
-        String pos = Integer.toString(clickedItemIndex);
+        String pos = tag.toString();
+        Log.d("Switch", "Tag: " + pos);
 
         Uri uri = LockListContract.LockListEntry.CONTENT_URI;
-        uri = uri.buildUpon().appendPath("ip").appendPath(pos).build();
+        if (b) {
+            uri = uri.buildUpon().appendPath("ip").appendPath(pos).build();
 
-        Log.d(TAG, "Uri is: " + uri.toString());
+            Log.d(TAG, "Uri is: " + uri.toString());
 
-        Cursor mCusror = getContentResolver().query(uri, null, null, null,null);
-        if (mCusror.moveToFirst()) {
-            String data = mCusror.getString(mCusror.getColumnIndex(LockListContract.LockListEntry.COLUMN_IP_ADDRESS));
-            Log.d(TAG, data);
+            Cursor mCusror = getContentResolver().query(uri, null, null, null, null);
+            if (mCusror.moveToFirst()) {
+                Log.d(TAG, "onSwitchChanged: Cursor opened");
+                String data = mCusror.getString(mCusror.getColumnIndex(LockListContract.LockListEntry.COLUMN_IP_ADDRESS));
+                Log.d(TAG, "IP: " + data);
+            }
+        } else {
+
         }
     }
 

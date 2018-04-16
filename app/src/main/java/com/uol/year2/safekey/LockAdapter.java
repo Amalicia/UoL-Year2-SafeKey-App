@@ -45,7 +45,7 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public interface SwitchCheckListener {
-        void onSwitchChanged(int clickedItemIndex);
+        void onSwitchChanged(int clickedItemIndex, boolean b, Object tag);
     }
 
     @Override
@@ -101,11 +101,7 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 lockViewHolder.mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        if (b) {
-                            mOnCheckListener.onSwitchChanged(position);
-                        } else {
-
-                        }
+                        mOnCheckListener.onSwitchChanged(position, b, lockViewHolder.itemView.getTag());
                     }
                 });
 

@@ -13,7 +13,7 @@ public class LockListDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "lock_list.db";
     //Set DB version number - must be incremented if any changes are made
     //TODO IF ANYTHING IS CHANGED - UPDATE VERSION NUMBER
-    private static final int VERSION_NO = 5;
+    private static final int VERSION_NO = 6;
 
     public  LockListDBHelper(Context ctx) {
         super(ctx, DATABASE_NAME, null, VERSION_NO);
@@ -23,7 +23,7 @@ public class LockListDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         final String SQL_CREATE_LOCK_TABLE = "CREATE TABLE " +
                 LockListContract.LockListEntry.TABLE_NAME + " (" +
-                LockListContract.LockListEntry._ID + " INTEGER PRIMARY KEY, " +
+                LockListContract.LockListEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 LockListContract.LockListEntry.COLUMN_LOCK_NAME + " TEXT NOT NULL, " +
                 LockListContract.LockListEntry.COLUMN_LOCK_PW + " TEXT NOT NULL, " +
                 LockListContract.LockListEntry.COLUMN_IP_ADDRESS + " TEXT NOT NULL" +

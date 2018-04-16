@@ -76,14 +76,15 @@ public class LockListContentProvider extends ContentProvider {
                         sortOrder);
                 break;
             case LOCKS_WITH_IP:
-                String id = uri.getPathSegments().get(1);
-                String[] mProjection = new String[] {"ip_address"};
+                String id = uri.getPathSegments().get(2);
+                Log.d("IP Query", "Lock pos: " + (Integer.parseInt(id) + 2));
+                String[] mProjection = new String[] {LockListContract.LockListEntry.COLUMN_IP_ADDRESS};
                 String mSelection = "_id=?";
                 String[] mSelectionArgs = new String[] {id};
 
                 returnCursor = db.query(
                         LockListContract.LockListEntry.TABLE_NAME,
-                        mProjection,
+                        projection,
                         mSelection,
                         mSelectionArgs,
                         null,
