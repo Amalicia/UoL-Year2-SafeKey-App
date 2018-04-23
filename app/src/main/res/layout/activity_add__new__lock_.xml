@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tv_password"
-        android:text="Password:"
+        android:text="Key:"
         android:fontFamily="casual"
         android:textSize="25sp"
         android:layout_marginHorizontal="5dp"/>
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/et_password"
-        android:hint="Enter Password Here"
+        android:hint="Enter Key Here"
         android:fontFamily="casual"
         android:textSize="15sp"
         android:layout_marginHorizontal="5dp"/>
