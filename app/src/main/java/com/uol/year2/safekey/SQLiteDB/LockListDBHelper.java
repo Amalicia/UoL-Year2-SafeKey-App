@@ -15,10 +15,12 @@ public class LockListDBHelper extends SQLiteOpenHelper {
     //TODO IF ANYTHING IS CHANGED - UPDATE VERSION NUMBER
     private static final int VERSION_NO = 6;
 
+    //Create DB helper
     public  LockListDBHelper(Context ctx) {
         super(ctx, DATABASE_NAME, null, VERSION_NO);
     }
 
+    //SQL Create table statement
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         final String SQL_CREATE_LOCK_TABLE = "CREATE TABLE " +
@@ -31,6 +33,7 @@ public class LockListDBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_LOCK_TABLE);
     }
 
+    //Upgrade function
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LockListContract.LockListEntry.TABLE_NAME);

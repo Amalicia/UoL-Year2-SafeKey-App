@@ -60,6 +60,7 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //Get parent activity where Recycler view is located
         Context ctx = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(ctx);
         boolean shouldAttachToParent = false;
@@ -86,58 +87,77 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         //Binding of the views into their positions
         switch (getItemViewType(position)) {
             case LOCK:              //Lock binding
+                //Get index
                 int idIndex = mCursor.getColumnIndex(LockListContract.LockListEntry._ID);
-
+                //Verify index
                 Log.d("Lock Adapter", "idIndex = " + idIndex);
+
+                //Move Cursor from previous query to new position
                 mCursor.moveToPosition(position);
 
+                //Create view holder
                 final LockViewHolder lockViewHolder = (LockViewHolder) holder;
+                //Get lock name from Cursor then call view holder function to set name to text editor
                 String name = mCursor.getString(mCursor.getColumnIndex(LockListContract.LockListEntry.COLUMN_LOCK_NAME));
                 lockViewHolder.setName(name);
 
+                //Get Id from cursor and set as Tag for the holder
                 final int id = mCursor.getInt(idIndex);
                 lockViewHolder.itemView.setTag(id);
 
+                //Binds onSwitchChanged to view holder
                 lockViewHolder.mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        //Function on SafeKey_Main_Page.java
                         mOnCheckListener.onSwitchChanged(position, b, lockViewHolder.itemView.getTag());
                     }
                 });
 
                 break;
             case PLUS:              //Plus binding
+                //Create plus view holder
+                //No special functions needed here as static value
                 final PlusViewHolder plusViewHolder = (PlusViewHolder) holder;
                 break;
         }
     }
 
+    //Get number of items in recycler view
     @Override
     public int getItemCount() {
+        //If empty cursor then 1 item is still there due to '+'
         if (mCursor == null) return 1;
+        //Otherwise return Number of items in cursor + 1 for plus
         else return mCursor.getCount() + 1;
     }
 
     //Swap cursor function
     public Cursor swapCursor(Cursor c) {
+        //If cursor is the same as previous no updates need to occur
        if (mCursor == c) return null;
 
+       //Swap cursor values
        Cursor temp = mCursor;
        this.mCursor = c;
 
+       //Data has changed so view must be restarted to show changed
        if (c != null) this.notifyDataSetChanged();
        return temp;
     }
 
     // Creation of two views with different purposes
 
+    //Standard lock view
     class LockViewHolder extends RecyclerView.ViewHolder {
+        //GUI elements
         TextView ListItemLockView;
         public Switch mSwitch;
 
         public LockViewHolder (View itemView)
         {
            super(itemView);
+           //Link GUI items to variables
            ListItemLockView = (TextView) itemView.findViewById(R.id.tv_item_lock);
            mSwitch = (Switch) itemView.findViewById(R.id.sh_toggle);
         }
@@ -160,6 +180,7 @@ public class LockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public void onClick(View view) {
             // When button is clicked
             int clickedPosition = getAdapterPosition();
+            //Uses function on SafeKey_Main_Page.java
             mOnClickListener.onPlusClicked(clickedPosition);
         }
     }
