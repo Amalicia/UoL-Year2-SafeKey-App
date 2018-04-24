@@ -6,4 +6,4 @@ The aim is to create a smart door lock system which can be controlled remotely b
 
 The app has the ability to communicate with an Arduino-Servo system.
 
-Arduino-Servo details:
+Arduino-Servo details: https://github.com/AndreeaM12/UoL-Year2-SafeKey-Arduino
