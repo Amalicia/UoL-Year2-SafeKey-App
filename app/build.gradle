@@ -6,8 +6,8 @@ android {
         applicationId "com.uol.year2.safekey"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 6
-        versionName "1.18"
+        versionCode 8
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

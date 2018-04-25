@@ -174,10 +174,9 @@ public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.
 
         //If switch checked
         if (b) {
-            //Lock door
-            new Lock_Connect().execute(data + "/?lock");
+            new Background_get().execute(data + "/?lock");
         } else {
-            new Lock_Connect().execute(data + "/?unlock");
+            new Background_get().execute(data + "/?unlock");
         }
     }
 
@@ -236,40 +235,33 @@ public class SafeKey_Main_Page extends AppCompatActivity implements LockAdapter.
         mAdapter.swapCursor(null);
     }
 
-    private class Lock_Connect extends AsyncTask<String, Void, String> {
+    private class Background_get extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
             try {
-                //Create URL to connect to Arduino server
+                //Create Url
+                //Currently static for testing
                 URL url = new URL("http://" + params[0]);
+                //Connect using HTTP
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                Log.d(TAG, "doInBackground: " + url.toString());
-
-                //Buffering input stream from HTTP connection
+                //Buffer for inputs from Arduino
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder result = new StringBuilder();
                 String inputLine;
                 while ((inputLine = in.readLine()) != null)
                     result.append(inputLine).append("\n");
 
+                //Close buffer
                 in.close();
+                //Stop HTTP connection
                 connection.disconnect();
-
-                //Connected toast
                 return result.toString();
 
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-            mToast = Toast.makeText(ctx, "Nope, no connection :(", Toast.LENGTH_LONG);
-            mToast.show();
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
         }
     }
 }

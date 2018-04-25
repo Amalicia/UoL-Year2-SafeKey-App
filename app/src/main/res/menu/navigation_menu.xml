@@ -4,10 +4,10 @@
     <item android:id="@+id/nav_accoount"
         android:title="My Account"></item>
     
-    <item android:id="@+id/nav_accoount"
+    <item android:id="@+id/nav_locks"
          android:title="Locks"></item>
     
-      <item android:id="@+id/nav_accoount"
+      <item android:id="@+id/nav_log"
           android:title="Log"></item>
 
 </menu>

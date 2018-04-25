@@ -6,9 +6,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.uol.year2.safekey.SQLiteDB.LockListContract;
@@ -26,6 +29,7 @@ public class Add_New_Lock_Activity extends AppCompatActivity {
     private Button mTestFunction;
     private Button mStaticConnect;
     private Button mStaticFunction;
+    private Button mQMark;
     private Toast mToast;
     private Context ctx;
 
@@ -34,43 +38,23 @@ public class Add_New_Lock_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__new__lock_);
 
-        mTestConnect = (Button) findViewById(R.id.btn_test_connect);
-        mTestFunction = (Button) findViewById(R.id.btn_test_function);
-        mStaticConnect = (Button) findViewById(R.id.btn_static_test);
-        mStaticConnect = (Button) findViewById(R.id.btn_static_function);
-
         mIpText = (EditText) findViewById(R.id.et_ip);
 
         ctx = this;
 
-        //Create click event to test Wifi connectivity
-        mTestConnect.setOnClickListener(new View.OnClickListener() {
+        Switch mLockSwitch = (Switch) findViewById(R.id.switch_lock);
+
+        mLockSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                new Background_get().execute("");
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    new Background_get().execute("lock");
+                } else {
+                    new Background_get().execute("unlock");
+                }
             }
         });
 
-        mTestFunction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new Background_get().execute("lock");
-            }
-        });
-
-        mStaticConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new StaticConnect().execute("");
-            }
-        });
-
-        mStaticConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new StaticConnect().execute("lock");
-            }
-        });
     }
 
     public void onClickAddLock(View view) {
@@ -101,7 +85,8 @@ public class Add_New_Lock_Activity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                URL url = new URL("http://" + mIpText.getText().toString() + "/?" + params[0]);
+                URL url = new URL("http://192.168.0.29/?" + params[0]);
+                //Log.d();
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -112,63 +97,11 @@ public class Add_New_Lock_Activity extends AppCompatActivity {
 
                 in.close();
                 connection.disconnect();
-
-                //Connected toast
-                String connectMessage = "We are connected!";
-                mToast = Toast.makeText(ctx, connectMessage, Toast.LENGTH_LONG);
-                mToast.show();
-
                 return result.toString();
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            //Connection failed toast
-            String connectFailedMessage = "Nope, no connection :(";
-            mToast = Toast.makeText(ctx, connectFailedMessage, Toast.LENGTH_LONG);
-            mToast.show();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-    }
-
-    private class StaticConnect extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                URL url = new URL("https://192.168.0.29/?" + params[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-                StringBuilder result = new StringBuilder();
-                String inputLine;
-
-                while ((inputLine = in.readLine()) != null){
-                    result.append("\n");
-                }
-
-                in.close();
-                connection.disconnect();
-
-                //Messages to say if connected or not
-                String connectMessage = "We are connected!";
-                mToast = Toast.makeText(ctx, connectMessage, Toast.LENGTH_LONG);
-                mToast.show();
-
-                return result.toString();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            String connectFailedMessage = "Nope, no connection :(";
-            mToast = Toast.makeText(ctx, connectFailedMessage, Toast.LENGTH_LONG);
-            mToast.show();
             return null;
         }
     }
